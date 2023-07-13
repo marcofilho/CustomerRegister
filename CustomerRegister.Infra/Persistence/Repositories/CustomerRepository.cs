@@ -1,6 +1,8 @@
 ﻿using CustomerRegister.Core.Entities;
+using CustomerRegister.Core.Enums;
 using CustomerRegister.Core.Repositories;
 using MongoDB.Driver;
+using System.Linq.Expressions;
 
 namespace CustomerRegister.Infra.Persistence.Repositories
 {
@@ -31,12 +33,13 @@ namespace CustomerRegister.Infra.Persistence.Repositories
                             .ToListAsync();
         }
 
-        public async Task<Customer> GetByDDDAndPhoneAsync(int ddd, string phoneNumber)
+        public async Task<Customer> GetByDDDAndPhoneAsync(int ddd, string phoneNumber, PhoneTypeEnum phoneTypeEnum)
         {
-            var phone = new Phone(ddd, phoneNumber);
+            var phone = new Phone(ddd, phoneNumber, phoneTypeEnum);
 
-            return await _customerCollection
-                           .FindAsync(p => p.Phones.Contains(phone)).Result.SingleOrDefaultAsync();
+            Expression<Func<Customer, bool>> filter = x => x.Phones.Contains(phone);
+
+            return await _customerCollection.FindAsync(filter).Result.FirstOrDefaultAsync();
         }
 
         public async Task<Customer> GetByEmailAsync(string email)

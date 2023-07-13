@@ -17,7 +17,7 @@ namespace CustomerRegister.Application.Queries.GetCustomerByDDDAndPhone
         public async Task<CustomerDTO> Handle(GetCustomerByDDDAndPhoneQuery request, CancellationToken cancellationToken)
         {
             {
-                var customer = await _customerRepository.GetByDDDAndPhoneAsync(request.DDD, request.PhoneNumber);
+                var customer = await _customerRepository.GetByDDDAndPhoneAsync(request.DDD, request.PhoneNumber, request.PhoneType);
 
                 if (customer == null)
                     return null;

@@ -2,13 +2,14 @@
 using CustomerRegister.Application.Commands.DeleteCustomer;
 using CustomerRegister.Application.Commands.UpdateCustomer;
 using CustomerRegister.Application.Queries.GetAllCustomers;
+using CustomerRegister.Application.Queries.GetCustomerByDDDAndPhone;
 using CustomerRegister.Application.Queries.GetCustomerByEmail;
 using CustomerRegister.Application.Queries.GetCustomerById;
-using CustomerRegister.Application.ViewModels;
+using CustomerRegister.Core.DTOs;
 using CustomerRegister.Core.Entities;
+using CustomerRegister.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace CustomerRegister.API.Controllers
@@ -60,9 +61,10 @@ namespace CustomerRegister.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = id }, command);
         }
 
-        [HttpPut("{email)}", Name = "UpdateCustomer")]
+        [HttpPut("{id}")]
         [ProducesResponseType(typeof(Customer), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Put(string email, [FromBody] UpdateCustomerCommand command)
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Put(string id, [FromBody] UpdateCustomerCommand command)
         {
             if (command.FullName.Length > 200)
                 return BadRequest();
@@ -100,9 +102,9 @@ namespace CustomerRegister.API.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Customer), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetByPhone(int ddd, string phone)
+        public async Task<IActionResult> GetByPhone(int ddd, string phone, PhoneTypeEnum phoneTypeEnum)
         {
-            var customers = await _mediator.Send(new GetAllCustomersQuery(phone));
+            var customers = await _mediator.Send(new GetCustomerByDDDAndPhoneQuery(ddd, phone, phoneTypeEnum));
 
             return Ok(customers);
         }

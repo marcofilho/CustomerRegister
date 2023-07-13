@@ -9,7 +9,6 @@ namespace CustomerRegister.Application.Commands.CreateCustomer
         public string FullName { get; set; }
         public string Email { get; set; }
         public List<PhoneViewModel> Phones { get; set; }
-        public string CustomerId { get; set; }
     }
 
 }

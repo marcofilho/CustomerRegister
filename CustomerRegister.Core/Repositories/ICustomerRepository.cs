@@ -1,4 +1,5 @@
 ﻿using CustomerRegister.Core.Entities;
+using CustomerRegister.Core.Enums;
 
 namespace CustomerRegister.Core.Repositories
 {
@@ -10,6 +11,6 @@ namespace CustomerRegister.Core.Repositories
         Task UpdateAsync(Customer customer);
         Task<Customer> GetByIdAsync(string id);
         Task<List<Customer>> GetAllAsync();
-        Task<Customer> GetByDDDAndPhoneAsync(int ddd, string phoneNumber); 
+        Task<Customer> GetByDDDAndPhoneAsync(int ddd, string phoneNumber, PhoneTypeEnum phoneTypeEnum); 
     }
 }
