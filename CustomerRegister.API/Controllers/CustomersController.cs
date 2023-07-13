@@ -75,9 +75,9 @@ namespace CustomerRegister.API.Controllers
         [HttpDelete("{id:length(24)}", Name = "DeleteCustomer")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Customer), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string email)
         {
-            var customer = await _mediator.Send(new GetCustomerByIdQuery(id));
+            var customer = await _mediator.Send(new GetCustomerByEmailQuery(email));
 
             if (customer == null)
                 return NotFound();
