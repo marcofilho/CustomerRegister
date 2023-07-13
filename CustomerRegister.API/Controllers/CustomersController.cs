@@ -60,9 +60,9 @@ namespace CustomerRegister.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = id }, command);
         }
 
-        [HttpPut("{id:length(24)}", Name = "UpdateCustomer")]
+        [HttpPut("{email)}", Name = "UpdateCustomer")]
         [ProducesResponseType(typeof(Customer), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Put(string id, [FromBody] UpdateCustomerCommand command)
+        public async Task<IActionResult> Put(string email, [FromBody] UpdateCustomerCommand command)
         {
             if (command.FullName.Length > 200)
                 return BadRequest();
@@ -72,7 +72,7 @@ namespace CustomerRegister.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}", Name = "DeleteCustomer")]
+        [HttpDelete("{email}", Name = "DeleteCustomer")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Customer), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Delete(string email)
@@ -92,6 +92,17 @@ namespace CustomerRegister.API.Controllers
         public async Task<IActionResult> GetAll(string query)
         {
             var customers = await _mediator.Send(new GetAllCustomersQuery(query));
+
+            return Ok(customers);
+        }
+
+        [Route("[action]/{ddd}/{phone}", Name = "GetCustomerByDDDAndPhone")]
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Customer), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetByPhone(int ddd, string phone)
+        {
+            var customers = await _mediator.Send(new GetAllCustomersQuery(phone));
 
             return Ok(customers);
         }

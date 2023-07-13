@@ -15,7 +15,7 @@ namespace CustomerRegister.Application.Commands.UpdateCustomer
 
         public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _customerRepository.GetByIdAsync(request.Id);
+            var customer = await _customerRepository.GetByEmailAsync(request.Email);
 
             var phones = request.Phones.Select(p => new Phone(p.DDD, p.PhoneNumber, p.PhoneType)).ToList();
 

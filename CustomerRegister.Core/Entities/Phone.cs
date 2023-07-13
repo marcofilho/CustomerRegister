@@ -4,6 +4,12 @@ namespace CustomerRegister.Core.Entities
 {
     public class Phone
     {
+        public Phone(int ddd, string phoneNumber)
+        {
+            DDD = ddd;
+            PhoneNumber = phoneNumber;
+        }
+
         public Phone(int ddd, string phoneNumber, PhoneTypeEnum phoneType)
         {
             DDD = ddd;

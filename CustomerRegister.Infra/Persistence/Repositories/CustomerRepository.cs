@@ -31,6 +31,14 @@ namespace CustomerRegister.Infra.Persistence.Repositories
                             .ToListAsync();
         }
 
+        public async Task<Customer> GetByDDDAndPhoneAsync(int ddd, string phoneNumber)
+        {
+            var phone = new Phone(ddd, phoneNumber);
+
+            return await _customerCollection
+                           .FindAsync(p => p.Phones.Contains(phone)).Result.SingleOrDefaultAsync();
+        }
+
         public async Task<Customer> GetByEmailAsync(string email)
         {
             return await _customerCollection.Find(c => c.Email == email).SingleOrDefaultAsync();

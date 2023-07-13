@@ -52,7 +52,7 @@ builder.Services.AddMediatR(typeof(CreateCustomerCommand));
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientsRegister.API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerRegister.API", Version = "v1" });
 });
 
 var app = builder.Build();
@@ -62,7 +62,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClientsRegister.API v1"));
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CustomerRegister.API v1"));
 
 }
 app.UseHttpsRedirection();
